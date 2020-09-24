@@ -32,5 +32,32 @@ balls_df = select(trash_df, sports_balls, year)
 balls2017_df = subset(balls_df, year == 2017) %>%summarise_if(is.numeric, na.rm = TRUE, median) %>% view()
 ```
 
+
 ## Data Summary
 These two datasets include info from the Mr. Trashwheel collector in Baltimore, MD. This machine collects trash and then stores it in a dumpster. Data includes info on year, month, trash collected, and the amounts of some specific kinds of trash. There are a total of `r nrow(trash_df)` rows in our final dataset. Additional data sheets include precipitation data by month and year, which have a total of `r nrow(precip_df)` rows. In 2018, there was a total of `r sum(pull(precip2018_df, total))` inches of rain. In 2017, the median number of sports balls in a dumpster was 8.
+
+## Problem 2
+Importing, cleaning, and transforming the NYC transit data
+
+```{r import2}
+nyc_df = read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>% janitor::clean_names() %>% select(line, station_name, station_latitude, station_longitude, route1:route11, entry, vending, entrance_type, ada) %>% mutate(entry = recode(entry, YES = TRUE, NO = FALSE))
+summary(nyc_df)
+```
+### data summary
+This dataset contains information on NYC subway entrances and exits, including the location, line, latitude and longitude, ADA accessibility, and other information. So far, names have been tidied, some variables were dropped, and entry was recoded from yes/no to true/false. This dataset has 1868 rows and 19 columns. The data are tidy.
+
+### additional analyses
+```{r analysis2}
+distinct(nyc_df, station_name)
+summary(pull(nyc_df, ada))
+nyc2_df = select(nyc_df, entry, vending) %>% subset(vending =="NO")
+sum(pull(nyc2_df, entry))
+```
+
+There are 356 distinct stations. 468 Stations are ADA compliant. Out of the 183 stations without vending, 69 (`r (69/183)*100`%) allow entry.
+
+Now reformating
+```{r reformat}
+
+```
+
