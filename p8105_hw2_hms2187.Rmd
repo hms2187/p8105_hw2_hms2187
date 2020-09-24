@@ -1,0 +1,6 @@
+---
+title: "p8105_hw2_hms2187"
+author: "Henry Stoddard"
+date: "9/24/2020"
+output: github_document
+---
