@@ -1,6 +1,17 @@
 ---
-title: "p8105_hw2_hms2187"
+title: "Homework 2"
 author: "Henry Stoddard"
 date: "9/24/2020"
 output: github_document
 ---
+## Problem 1
+
+Importing Mr Trash Wheel dataset and tidying 
+
+```{r library, import, tidy}
+library(tidyverse)
+library(readxl)
+trash_df = read_excel("./data/Mr_Trash_Wheel.xlsx")
+trash_df = janitor::clean_names(trash_df) %>% select(-notes, -x16, -x17) %>% drop_na(dumpster) %>% mutate(sports_balls = round(sports_balls), sports_balls = as.integer(sports_balls))
+```
+
