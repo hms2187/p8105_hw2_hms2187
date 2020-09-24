@@ -26,6 +26,11 @@ Now combining datasets
 ```{r merge}
 precip_df = bind_rows(precip2018_df, precip2017_df) %>% mutate(month = month.name[month])
 ```
+```{r specific analysis}
+sum(pull(precip2018_df, total)) %>% view()
+balls_df = select(trash_df, sports_balls, year)
+balls2017_df = subset(balls_df, year == 2017) %>%summarise_if(is.numeric, na.rm = TRUE, median) %>% view()
+```
 
 ## Data Summary
-These two datasets include info from the Mr. Trashwheel collector in Baltimore, MD. This machine collects trash and then stores it in a dumpster. Data includes info on year, month, trash collected, and the amounts of some specific kinds of trash. There are a total of `r nrow(trash_df)` rows in our final dataset. Additional data sheets include precipitation data by month and year, which have a total of `r nrow(precip_df)` rows. 
+These two datasets include info from the Mr. Trashwheel collector in Baltimore, MD. This machine collects trash and then stores it in a dumpster. Data includes info on year, month, trash collected, and the amounts of some specific kinds of trash. There are a total of `r nrow(trash_df)` rows in our final dataset. Additional data sheets include precipitation data by month and year, which have a total of `r nrow(precip_df)` rows. In 2018, there was a total of `r sum(pull(precip2018_df, total))` inches of rain. In 2017, the median number of sports balls in a dumpster was 8.
