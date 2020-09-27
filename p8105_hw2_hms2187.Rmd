@@ -68,3 +68,10 @@ nyc_df4 = distinct(nyc_df3, station_name, line)
 summary(pull(nyc_df3, ada))
 ```
 There are `r nrow(nyc_df4)` distinct stations that serve the A train. 107 stations that serve the A train are ADA compliant.
+
+## Question 3
+Importing data
+```{r}
+pols_df = read_csv("./data/pols-month.csv") %>% janitor::clean_names() %>% separate(mon, into = c("year", "month", "day")) %>% mutate(month = recode(month, `01` = "Jan", `02` = "Feb", `03` = "Mar", `04` = "Apr", `05` = "May", `06` = "Jun", `07` = "Jul", `08` = "Aug", `09` = "Sep", `10` = "Oct", `11` = "Nov", `12` = "Dec")) %>% mutate(president = ifelse(prez_gop == 1, "gop", "dem")) %>% select(-prez_dem, -prez_gop, -day)
+```
+
