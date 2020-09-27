@@ -44,20 +44,27 @@ nyc_df = read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>% ja
 summary(nyc_df)
 ```
 ### data summary
-This dataset contains information on NYC subway entrances and exits, including the location, line, latitude and longitude, ADA accessibility, and other information. So far, names have been tidied, some variables were dropped, and entry was recoded from yes/no to true/false. This dataset has 1868 rows and 19 columns. The data are tidy.
+This dataset contains information on NYC subway entrances and exits, including the location, line, latitude and longitude, ADA accessibility, and other information. So far, names have been tidied, some variables were dropped, and entry was recoded from yes/no to true/false. This dataset has 1868 rows and 19 columns. The data are reasonably tidy, but not as tidy as they could be.
 
 ### additional analyses
 ```{r analysis2}
-distinct(nyc_df, station_name)
+distinct(nyc_df, station_name, line)
 summary(pull(nyc_df, ada))
 nyc2_df = select(nyc_df, entry, vending) %>% subset(vending =="NO")
 sum(pull(nyc2_df, entry))
 ```
 
-There are 356 distinct stations. 468 Stations are ADA compliant. Out of the 183 stations without vending, 69 (`r (69/183)*100`%) allow entry.
+There are 465 distinct stations. 468 Stations are ADA compliant. Out of the 183 stations without vending, 69 (`r (69/183)*100`%) allow entry.
 
-Now reformating
+Now reformating so that route number and name are distinct variables. Then, making that dataframe only include stations that serve the A train, so that we can find the distinct number of stations that serve the A train. Finally, finding out how many of the stations serving the A train are ADA compliant.
 ```{r reformat}
-
+nyc_df3 = nyc_df %>% 
+  mutate(route8 = as.character(route8),
+       route9 = as.character(route9),
+       route10 = as.character(route10),
+       route11 = as.character(route11)) %>% pivot_longer(route1:route11, names_to = "route", names_prefix = "route", values_to = "route_name") 
+nyc_df3 = subset(nyc_df3, route_name == "A")
+nyc_df4 = distinct(nyc_df3, station_name, line)
+summary(pull(nyc_df3, ada))
 ```
-
+There are `r nrow(nyc_df4)` distinct stations that serve the A train. 107 stations that serve the A train are ADA compliant.
