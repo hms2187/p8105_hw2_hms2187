@@ -44,7 +44,7 @@ nyc_df = read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>% ja
 summary(nyc_df)
 ```
 ### data summary
-This dataset contains information on NYC subway entrances and exits, including the location, line, latitude and longitude, ADA accessibility, and other information. So far, names have been tidied, some variables were dropped, and entry was recoded from yes/no to true/false. This dataset has 1868 rows and 19 columns. The data are reasonably tidy, but not as tidy as they could be.
+This dataset contains information on NYC subway entrances and exits, including the location, line, latitude and longitude, ADA accessibility, and other information. So far, names have been tidied, some variables were dropped, and entry was recoded from yes/no to true/false. This dataset has `r nrow(nyc_df)` rows and `r ncol(trash_df)` columns. The data are reasonably tidy, but not as tidy as they could be.
 
 ### additional analyses
 ```{r analysis2}
@@ -91,4 +91,4 @@ final_df = full_join(pols_df, snp_df, by = c("month", "year"))
 final_df2 = full_join(final_df, une_df, by = c("month", "year"))
 ```
 This final dataset is a combination of three smaller datasets. The pols_df dataset contains political information by month and year, including the number of governors, senators, representatives and presidents by political party. The snp_df dataset contains stock market data, showing the closing value of the SnP 500 by month and year. Finally, the une_df dataset contains unemployment data by month and year.
-The resulting dataset, final_df2, is 828 rows long by 11 columns wide. It includes data from 1947 through 2015. Key variables include the number of governors, senators, representatives and presidents by political party, closing value of the SnP 500, and unemployment rate by month and year.
+The resulting dataset, final_df2, is `r nrow(final_df2)` rows long by `r ncol(final_df2)` columns wide. It includes data from 1947 through 2015. Key variables include the number of governors, senators, representatives and presidents by political party, closing value of the SnP 500, and unemployment rate by month and year.
